@@ -54,4 +54,18 @@ router.post("/", upload.single("shop_photo"), async (req, res) => {
   }
 });
 
+// Get all retailers
+router.get("/", async (req, res) => {
+  try {
+    const [rows] = await db.query(
+      "SELECT * FROM retailers ORDER BY created_at DESC"
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch retailers" });
+  }
+});
+
+
 module.exports = router;
